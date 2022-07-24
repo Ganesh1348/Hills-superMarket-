@@ -1,2 +1,2 @@
 # Hills-superMarket-
-Developing the superMarket based on jersey and mysql
+Developing the superMarket project based on jersey and mysql
