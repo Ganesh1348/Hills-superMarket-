@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import com.electric.ElectricBilling.Command.customerCommand;
 import com.electric.ElectricBilling.Model.CustomerList;
 import com.electric.ElectricBilling.Model.CustomerListWtCount;
+import com.electric.ElectricBilling.Model.listCommonModel;
 import com.electric.ElectricBilling.Services.serviceImplementation;
 
 @Path("/customer")
@@ -37,11 +38,11 @@ public class CustomerController
 	@Path("/list")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CustomerList> getCustomerList(@QueryParam("offset") int offset) {
-		List<CustomerList> list = null;
+	public listCommonModel getCustomerList(@QueryParam("offset") int offset,@QueryParam("fetch") int fetch) {
+		listCommonModel list = null;
 		try
 		{
-			list=serviceImplementation.getListOfCustomer();
+			list=serviceImplementation.getListOfCustomer(offset,fetch);
 		}
 		catch(Exception e) {
 			e.printStackTrace();

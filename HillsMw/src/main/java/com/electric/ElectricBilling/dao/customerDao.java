@@ -11,6 +11,7 @@ import com.electric.ElectricBilling.Command.createCustomerCommand;
 import com.electric.ElectricBilling.Model.CustomerList;
 import com.electric.ElectricBilling.Model.CustomerListModel;
 import com.electric.ElectricBilling.Model.CustomerListWtCount;
+import com.electric.ElectricBilling.Model.listCommonModel;
 import com.electric.ElectricBilling.SQLQueries.SQLQueriesConstant;
 import com.electric.ElectricBilling.Services.CustomerInfServices;
 import com.electric.ElectricBilling.Services.interfaceImplementation;
@@ -39,7 +40,9 @@ public class customerDao
 	return result;
 	}
 
-	public List<CustomerList> executeCustomerList() throws Exception {
+	public listCommonModel executeCustomerList(int offset, int fetch) throws Exception {
+		
+		listCommonModel paginted=new listCommonModel();
 		List<CustomerListModel> list=new LinkedList<CustomerListModel>();
 		Connection con=DBconnection.getConnection();
 		PreparedStatement ps=con.prepareStatement(SQLQueriesConstant.CUSTOMERLIST);
@@ -59,7 +62,20 @@ public class customerDao
 		}
 		List<CustomerList> custList=CustomerInfServices.executeCustStatus(list);
 		
-		return custList;
+		paginted.setCount(custList.stream().count());
+		
+		paginted.setList(custList);
+		
+		
+		if(offset>=0 || fetch!=0) {
+			List<CustomerList> custListPaginated=custList.stream().skip(offset).limit(fetch).toList();
+			
+			paginted.setList(custListPaginated);
+			
+			return paginted;
+		}
+		
+		return paginted;
 	}
 
 }

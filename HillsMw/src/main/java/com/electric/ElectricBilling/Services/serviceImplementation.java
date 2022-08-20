@@ -6,6 +6,7 @@ import com.electric.ElectricBilling.Command.createCustomerCommand;
 import com.electric.ElectricBilling.Command.customerCommand;
 import com.electric.ElectricBilling.Model.CustomerList;
 import com.electric.ElectricBilling.Model.CustomerListWtCount;
+import com.electric.ElectricBilling.Model.listCommonModel;
 import com.electric.ElectricBilling.dao.customerDao;
 
 public class serviceImplementation
@@ -27,9 +28,9 @@ public class serviceImplementation
 	
 	}
 
-	public List<CustomerList> getListOfCustomer() throws Exception {
+	public listCommonModel getListOfCustomer(int offset, int fetch) throws Exception {
 		
-		return customerDao.executeCustomerList();
+		return customerDao.executeCustomerList(offset,fetch);
 	}
 
 }
